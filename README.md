@@ -1,2 +1,2 @@
-# 2D-platformer-V6
+# 2D-platformer
  
