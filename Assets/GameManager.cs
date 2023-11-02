@@ -25,6 +25,11 @@ public class GameManager : MonoBehaviour
             // Reload the scene after 3 seconds
             Invoke("ReloadLevel", 0.1f);
         }
-    }
 
+}
+    public void Replay()
+    {
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
+    }
 }

@@ -9,9 +9,6 @@ public class enemyPatrol : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private Transform currentPoint;
-    private bool isFacingRight = true;
-    private float FlipCooldown = 0;
-    private bool HasFliped;
     public float speed;
     public LayerMask wall;
     public Collider2D triggerCollider;
@@ -25,31 +22,15 @@ public class enemyPatrol : MonoBehaviour
       anim.SetBool("isRunning", true);
     }
     
-    private void FixedUpdate()
+    private void flip()
     {
-        if (triggerCollider.IsTouchingLayers(wall))
-        {
-            Flip();
-        }
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
     }
-    private void ResetFlip()
-    {
-        FlipCooldown = 0;
-    }
-    private void Flip()
-    {
-        if(FlipCooldown == 0)
-        {
-            isFacingRight = !isFacingRight;
-            Vector3 scale = transform.localScale;
-            scale.x *= -1;
-            transform.localScale = scale;
-            FlipCooldown = 1;
-            Invoke("ResetFlip", 0.3F);
-        }
-    }
+
     // Update is called once per frame
-    void Update()
+   void Update()
     {
        Vector2 point = currentPoint.position - transform.position;
        if (currentPoint == PointB.transform)
@@ -63,11 +44,13 @@ public class enemyPatrol : MonoBehaviour
 
        if(Vector2.Distance(transform.position, currentPoint.position) < 0.5F && currentPoint == PointB.transform)
             {
+            flip();
             currentPoint = PointA.transform;
         }
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5F && currentPoint == PointA.transform)
         {
-            currentPoint = PointB.transform;
+        flip();    
+        currentPoint = PointB.transform;
         }
     }
 }

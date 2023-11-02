@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Platformer
 {
@@ -9,6 +10,8 @@ namespace Platformer
         public float movingSpeed;
         public float jumpForce;
         private float moveInput;
+        public Text WINTEXT;
+        public Text DIETEXT;
 
         private bool facingRight = false;
         [HideInInspector]
@@ -82,11 +85,19 @@ namespace Platformer
         {
             if (other.gameObject.tag == "Enemy")
             {
-                deathState = true; // Say to GameManager that player is dead
+               DIETEXT.gameObject.SetActive(true); 
+               Time.timeScale = 0;
+           
             }
             else
             {
                 deathState = false;
+            }
+            
+            if (other.gameObject.tag == "Win")
+            {
+               WINTEXT.gameObject.SetActive(true); 
+               Time.timeScale = 0;
             }
         }
 
